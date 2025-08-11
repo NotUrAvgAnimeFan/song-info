@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 // will resolve in case there is any hard coded reference
-const {BASE_URL} = import.meta.env
+// const {BASE_URL} = import.meta.env
 
 function App() {
   const [count, setCount] = useState(0)
