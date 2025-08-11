@@ -34,7 +34,7 @@ export function SongInputForm() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-1/2 lg:max-w-2xl">
                 <FormField
                 control={form.control}
                 name="song_link"

@@ -9,7 +9,10 @@ function App() {
     <>
     <div className='bg-indigo-400 h-screen w-screen'>
       <h1 className='text-3xl text-center pt-10'>Spotify Song Info App</h1>
-      <SongInputForm />
+      <div className="flex justify-center pt-10 text-center">
+        <SongInputForm />
+      </div>
+      
     </div>
       
 
