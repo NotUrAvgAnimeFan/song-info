@@ -65,7 +65,7 @@ export function SongInputForm() {
             type: access_token.data.token_type,
             expires_in: access_token.data.expires_in
         };
-        localStorage.setItem('spotify_access_token', JSON.stringify(result));
+        
         return result;
     }
 
