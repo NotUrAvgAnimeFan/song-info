@@ -22,13 +22,6 @@ const formSchema = z.object({
     song_link: z.url({protocol: /^https$/, hostname: /^open\.spotify\.com$/, message: "Invalid Spotify URL"})
 })
 
-const accessToken = z.object({
-    token: z.string(),
-    type: z.string(),
-    expires_in: z.number(),
-})
-
-type AccessToken = z.infer<typeof accessToken>;
 
 export function SongInputForm() {
 
