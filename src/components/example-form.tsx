@@ -14,7 +14,9 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
-import axios from 'axios';
+
+import { getAccessToken } from "@/scripts/access-token"
+import { getSongMetadata } from "@/scripts/spotify-calls"
 
 const formSchema = z.object({
     song_link: z.url({protocol: /^https$/, hostname: /^open\.spotify\.com$/, message: "Invalid Spotify URL"})
@@ -38,60 +40,6 @@ export function SongInputForm() {
             song_link: "",
         },
     })
-
-    
-
-    async function getAccessToken(): Promise<AccessToken> {
-        const clientId = import.meta.env.VITE_CLIENT_ID
-        const clientSecret = import.meta.env.VITE_CLIENT_SECRET
-        //ensures we have correct client credentials
-        if (!clientId || !clientSecret) {
-            throw new Error("Client ID and Client Secret must be provided in the environment variables.");
-        }
-        const access_token = await axios.post('https://accounts.spotify.com/api/token',
-            new URLSearchParams({
-                grant_type: 'client_credentials',
-                client_id: clientId,
-                client_secret: clientSecret,
-            }),
-            {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                }
-            }
-        );
-        const result: AccessToken = {
-            token: access_token.data.access_token,
-            type: access_token.data.token_type,
-            expires_in: access_token.data.expires_in
-        };
-        
-        return result;
-    }
-
-    async function getSongMetadata(songLink: string, accessToken: AccessToken): Promise<string> {
-
-        const parts = songLink.split("track/");
-        const response = await axios.get(`https://api.spotify.com/v1/tracks/${parts[1]}`,
-            {
-                headers: {
-                    Authorization: `${accessToken.type} ${accessToken.token}`,
-                }
-            }
-        );
-
-        const artist = await axios.get(` https://api.spotify.com/v1/artists/${response.data.artists[0].id}`,
-            {
-                headers: {
-                    Authorization: `${accessToken.type} ${accessToken.token}`,
-                }
-            }
-        )
-
-        console.log(artist);
-
-        return artist.data.genres[0];
-    }
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         if (resulting_url) {
