@@ -9,7 +9,6 @@
   --color-mid: #403d39;
   --color-dark: #252422;
   --color-orangy: #eb5e28;
-  
 }
 
 @theme inline {
@@ -53,7 +52,7 @@
 :root {
   --radius: 0.625rem;
   /* this sets the background color of buttons */
-  --background: #fffcf2; 
+  --background: #fffcf2;
   --foreground: #403d39;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
