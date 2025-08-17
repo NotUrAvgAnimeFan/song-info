@@ -15,7 +15,7 @@ function App() {
             <ModeToggle />
           </div>
         </div>
-        <div className="flex justify-center pt-10 text-center">
+        <div className="flex justify-center pt-10 text-center text-mid dark:text-greyish">
           <SongInputForm />
         </div>
         

@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import {z} from "zod"
@@ -24,8 +25,7 @@ const formSchema = z.object({
 
 
 export function SongInputForm() {
-
-    const resulting_url = document.getElementById("result")
+    const resultRef = React.useRef<HTMLParagraphElement | null>(null)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -35,6 +35,7 @@ export function SongInputForm() {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        const resulting_url = resultRef.current
         if (resulting_url) {
             const access_token = await getAccessToken();
             const song_name = await getSongMetadata(values.song_link, access_token);
@@ -46,7 +47,7 @@ export function SongInputForm() {
     return (
         <div className="flex flex-col w-screen items-center">
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-1/2 lg:max-w-2xl">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-4/5 sm:w-2xl px-4">
                 <FormField
                 control={form.control}
                 name="song_link"
@@ -64,10 +65,23 @@ export function SongInputForm() {
                 )} 
                 
                 />
-                <Button type="submit">Submit</Button>
+                <Button
+                    type="submit"
+                    className="relative z-50 w-full sm:w-auto pointer-events-auto"
+                    style={{ touchAction: 'manipulation' }}
+                    aria-label="Submit song link"
+                    onTouchEnd={(e) => {
+                        // Some mobile browsers (eg. Firefox Android) may not fire a click reliably;
+                        // call the form submit handler on touch end as a fallback.
+                        e.preventDefault()
+                        void form.handleSubmit(onSubmit)()
+                    }}
+                >
+                    Submit
+                </Button>
             </form>
         </Form>
-        <p className="pt-10" id="result">Hello</p>
+    <p ref={resultRef} className="pt-10" id="result">Hello</p>
         </div>
         
     )
