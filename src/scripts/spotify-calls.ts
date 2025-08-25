@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { AccessToken } from "../types/types"; // Adjust the path as needed
 import type { SongMeta } from "../types/types"; // Adjust the path as needed
+// import { chatGPTSongGenre } from "./chatgpt-calls";
 
 export async function getSongMetadata(
   songLink: string,
@@ -39,8 +40,12 @@ export async function getSongMetadata(
 
   output.artist = artist.data.name;
 
+  console.log(artist.data.genres)
+
   if (artist.data.genres.length === 0) {
-    output.genre = "No Genres Available";
+    // const generated_genre = await chatGPTSongGenre(track_data.data.name, artist.data.name);
+    // output.genre = generated_genre[0];
+    output.genre = "None generated";
   } else {
     output.genre = artist.data.genres[0];
   }

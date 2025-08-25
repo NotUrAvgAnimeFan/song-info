@@ -22,7 +22,7 @@ export default function SongDetails({ data }: { data: SongMeta }) {
           <span className="font-bold">Artist:</span> {data.artist}
         </p>
         <p>
-          <span className="font-bold">Genre:</span> {data.genre}
+          <span className="font-bold">Song Genre:</span> {data.genre}
         </p>
       </div>
     </div>

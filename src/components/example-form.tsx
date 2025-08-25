@@ -17,10 +17,11 @@ import {
 import { Input } from "@/components/ui/input";
 import SongDetails from "@/components/song-details";
 
-import { getAccessToken } from "@/scripts/access-token";
-import { getSongMetadata } from "@/scripts/spotify-calls";
+// import { getAccessToken } from "@/scripts/access-token";
+// import { getSongMetadata } from "@/scripts/spotify-calls";
 
 import type { SongMeta } from "../types/types";
+import { fetchSongData } from "@/scripts/api-calls";
 
 const formSchema = z.object({
   song_link: z.url({
@@ -50,8 +51,9 @@ export function SongInputForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
 
-    const access_token = await getAccessToken();
-    const song_info = await getSongMetadata(values.song_link, access_token);
+    // const access_token = await getAccessToken();
+    // const song_info = await getSongMetadata(values.song_link, access_token);
+    const song_info = await fetchSongData(values.song_link);
 
     setSongMeta(song_info);
     setShowSongDetails(true);
@@ -93,7 +95,7 @@ export function SongInputForm() {
               void form.handleSubmit(onSubmit)();
             }}
           >
-            Submit
+            Get Info
           </Button>
         </form>
       </Form>
